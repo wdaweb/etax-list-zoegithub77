@@ -40,9 +40,9 @@ function generateReceiptNumber() {
 }
 
 $dsn = "mysql:host=localhost;charset=utf8;dbname=lottery";
-$pdo = new PDO($dsn, 'root', 'F225228477');
+$pdo = new PDO($dsn, 'root', '');
 
-for($i = 0; $i < 100000; $i++) {
+for($i = 0; $i < 10000; $i++) {
 
     $year = 2019;
     $month_group = randomMonthGroup();

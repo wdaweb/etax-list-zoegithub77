@@ -4,96 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>我的發票清單</title>
-
+    <title>各期發票清單_查詢</title>
 </head>
+  
 <body>
-    <?php
-        include_once ("./api/base.php");
-    ?>
-    <div > 
-        <div >
-            <h2>發票清單</h2>
-            <?php
-            if(empty($_GET['month_group'])){
-                $_GET['month_group'] ='';
+<?php
+    include_once ("./api/base.php");
+
+if(!empty($_POST['year'])) {
+    $year=$_POST['year'];
+} else {
+    $year=date("Y");
+}
+if(isset($_POST['submit'])) {
+    $month=$_POST['submit'];
+} else {
+    $month="月";
+}
+?>
+<form action="invoice_list.php" method="post">
+    <table>
+        <tr>
+            <td colspan="3"><a href="index.html">回首頁</a></td>
+            <td colspan="3"><?=$year."年&emsp;".$month;?></td>
+        </tr>
+        <tr>
+            <td><input type="submit" name="submit" value="1-2月"></td>
+            <td><input type="submit" name="submit" value="3-4月"></td>
+            <td><input type="submit" name="submit" value="5-6月"></td>
+            <td><input type="submit" name="submit" value="7-8月"></td>
+            <td><input type="submit" name="submit" value="9-10月"></td>
+            <td><input type="submit" name="submit" value="11-12月"></td>
+        </tr>
+        <tr>
+            <td colspan="4">發票號碼</td>
+            <td colspan="2">金額</td>
+        </tr>
+        <tr>
+            <td colspan="6">
+            <div>
+        <?php
+
+            function showCount($year,$month) {
+                global $pdo;
+                $sqlCount="SELECT COUNT(*), SUM(`money`) FROM `invoice` WHERE `year`='$year' && `month_group`='$month'";
+                $count=$pdo->query($sqlCount)->fetch();
+                return $count;
             }
-            if($_GET['month_group'] == "1-2月"){
-                echo"<a href='invoice_list.php?month_group='1-2月''>1-2月</a></div>";
-            }else{
-                echo"<a href='invoice_list.php?month_group='1-2月''>1-2月</a></div>";
+
+        if(isset($_POST['submit'])) {
+            $month=["1-2月", "3-4月", "5-6月", "7-8月", "9-10月", "11-12月"];
+            if($_POST['submit']==$month[0]) {
+                showList($year,"1-2月");
+                $counted=showCount($year,"1-2月");
             }
-            if($_GET['month_group'] == ''){
-                echo "<a herf='invoice_list.php?month_group='3-4月''>3-4月</a></div>";
-            }else{
-                echo "<a herf='invoice_list.php?month_group='3-4月''>3-4月</a></div>";
+            if($_POST['submit']==$month[1]) {
+                showList($year,"3-4月");
+                $counted=showCount($year,"3-4月");
             }
-            if($_GET['month_group'] == ''){
-                echo "<a herf='invoice_list.php?month_group='5-月''>月</a></div>";
-            }else{
-                echo 
+            if($_POST['submit']==$month[2]) {
+                showList($year,"5-6月");
+                $counted=showCount($year,"5-6月");
             }
-            if($_GET['month_group'] == ''){
-                echo "<a herf='invoice_list.php?month_group='月''>月</a></div>";
-            }else{
-                echo 
+            if($_POST['submit']==$month[3]) {
+                showList($year,"7-8月");
+                $counted=showCount($year,"7-8月");
             }
-            if($_GET['month_group'] == ''){
-                echo "<a herf='invoice_list.php?month_group='月''>月</a></div>";
-            }else{
-                echo 
+            if($_POST['submit']==$month[4]) {
+                showList($year,"9-10月");
+                $counted=showCount($year,"9-10月");
             }
-            if($_GET['month_group'] == ''){
-                echo "<a herf='invoice_list.php?month_group='月''>月</a></div>";
-            }else{
-                echo 
+            if($_POST['submit']==$month[5]) {
+                showList($year,"11-12月");
+                $counted=showCount($year,"11-12月");
             }
-             ?>
-             <div ><a href="index.html">回首頁</a></div>
-        </div>
-        <div > 
+        } else {
+            $counted=["0", "0"];
+        }
             
-                    
-                <?php
-                    if(!empty($_GET['period'])){
-                        $row=selectFA("deposited", $_GET['period']);
-                        ?>
-                        <div>本期發票</div>
-                            <div style="overflow: auto; height: 450px;">
-                                <table>
-                                    <tr>
-                                        <td>號碼</td>
-                                        <td>金額</td>
-                                        <td>編輯</td>
-                                    </tr>
-                        <?php
-                        foreach($row as $invoice){
-                            ?>
-                            <tr>
-                                <td><?=$invoice['Enum']?>-<?=$invoice['num']?></td>
-                                <td><?=$invoice['expend']?></td>
-                                <td><a class="edit" href="edit.php?period=<?=$_GET['period']?>&id=<?=$invoice['id']?>">修改</a>&nbsp&nbsp&nbsp<a class="edit" href="my_invoice.php?period=<?=$_GET['period']?>&del=<?=$invoice['id']?>">刪除</a></td>
-                            </tr>
-                            <?php
-                            if(!empty($_GET['del'])){
-                                del( "deposited", $_GET['del']);
-                                // 重整頁面 0.01秒                    
-                                header("location:http://localhost/invoice/my_invoice.php?period=" . $_GET['period']);
-                            }
-                            }
-                            $sum= countIn( "deposited", $_GET['period']);
-                        }else{
-                            $sum['num']='';
-                            ?>
-                            
-                            <?php
-                        }
-                    
-                ?>
-                </table>
+            function showList($year,$month) {
+                global $pdo;
+                $sql="SELECT * FROM `invoice` WHERE `year`='$year' && `month_group`='$month'";
+                // echo $sql;
+                $data=$pdo->query($sql)->fetchAll();
+                foreach($data as $value) {
+                    $num=$value[3];
+                    $amt=$value[4]."<br>";
+            ?>
+            <?=$num."&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;".$amt;?>
+        <?php
+            }
+        }
+        ?>
             </div>
-            <div>發票總數：<?= $sum['num']?></div>
-        </div>
-    </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">總共<?=$counted[0];?>張發票</td>
+            <td colspan="2">總計NT:<?=$counted[1];?>元</td>
+
+        </tr>
+    </table>
+</form>
 </body>
-</html>
+</html>  
