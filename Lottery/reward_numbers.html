@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>各期中獎號碼清單_輸入獎號</title>
+    <!-- <link rel="stylesheet" href="./css/style.css"> -->
+</head>
+<body>
+    <!-- <div class="navbar">  -->
+    <div>
+        <li>
+            <a href="query_reward.php">中獎號查詢</a>
+        </li>
+        <li>
+            <a href="index.html">回首頁</a>
+        </li>
+    </div>
+    <h1>統一發票中獎號碼清單</h1>
+    <!-- <div class="award-form"> -->
+    <div>
+        <form action="./api/recieve_reward_number.php" method="post">
+            <table>
+                <tr>
+                    <td colspan="3">
+                        年度：<input type="number" name="year" id="year">
+                    </td>
+                </tr>
+                <tr>
+                    <td>月份</td>
+                    <td>
+                        <select name="month_group" id="month_group">
+                            <option value="1-2月">1-2月</option>
+                            <option value="3-4月">3-4月</option>
+                            <option value="5-6月">5-6月</option>
+                            <option value="7-8月">7-8月</option>
+                            <option value="9-10月">9-10月</option>
+                            <option value="11-12月">11-12月</option>
+                        </select>
+                    </td>
+                    <td>獎金</td>
+                </tr>
+                <tr>
+                    <td>特別獎</td>
+                    <td>
+                        <input type="number" name="superSpecial">
+                    </td>
+                    <td>1000萬元</td>
+                </tr>
+                <tr>
+                    <td>特獎</td>
+                    <td>
+                        <input type="number" name="special">
+                    </td>
+                    <td>200萬元</td>
+                </tr>
+                <tr>
+                    <td>頭獎</td>
+                    <td>
+                        <input type="number" name="grand">
+                        <input type="number" name="grand1">
+                        <input type="number" name="grand2">
+                    </td>
+                    <td>20萬元</td>
+                </tr>
+                <tr>
+                    <td>二獎</td>
+                    <td>末 7 位數號碼與頭獎中獎號碼末 7 位相同者</td>
+                    <td>4萬元</td>
+                </tr>
+                <tr>
+                    <td>三獎</td>
+                    <td>末 6 位數號碼與頭獎中獎號碼末 6 位相同者</td>
+                    <td>1萬元</td>
+                </tr>
+                <tr>
+                    <td>四獎</td>
+                    <td>末 5 位數號碼與頭獎中獎號碼末 5 位相同者</td>
+                    <td>4千元</td>
+                </tr>
+                <tr>
+                    <td>五獎</td>
+                    <td>末 4 位數號碼與頭獎中獎號碼末 4 位相同者</td>
+                    <td>1千元</td>
+                </tr>
+                <tr>
+                    <td>六獎</td>
+                    <td>末 3 位數號碼與頭獎中獎號碼末 3 位相同者</td>
+                    <td>2百元</td>
+                </tr>
+                <tr>
+                    <td>增開六獎</td>
+                    <td>
+                        <input type="number" name="other">
+                        <input type="number" name="other1">                        
+                    </td>
+                    <td>2百元</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <input type="submit" value="送出">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>統一發票兌獎系統</title>
+</head>
+<body>
+        <h1>統一發票兌獎系統</h1>
+        <div >
+            <li><a href="invoice_list.php">各期發票清單</a></li>
+            <li><a href="query_reward.php">各期中獎號清單</a></li>
+            <li><a href="reward_numbers.html">輸入中獎號</a></li>
+        </div>
+        <div >
+            <form action="./api/recieve_invoice.php" method="post">
+                <label>
+                    年份：<input type="number" name="year" id="year"><br>
+                    期別：<select name="month_group" id="month_group">
+                        <option value="1-2月">1-2月</option>
+                        <option value="3-4月">3-4月</option>
+                        <option value="5-6月">5-6月</option>
+                        <option value="7-8月">7-8月</option>
+                        <option value="9-10月">9-10月</option>
+                        <option value="11-12月">11-12月</option>
+      
+                    </select>
+                </label>
+                <label>
+                    發票號碼：<input type="text" name="number" id="number">
+                
+                </label>
+                <label>
+                    發票金額：<input type="number" name="money" id="money">
+                </label>
+                <label>
+                    <input type="submit" value="送出">
+                </label>
+    
+            </form>
+        </div>
+    </body>
+    </html>
